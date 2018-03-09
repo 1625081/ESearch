@@ -1,0 +1,37 @@
+<h1>Listing articles</h1>
+<%= link_to 'New article', new_article_path %>
+
+<h1>Articles Search</h1>
+<%= form_for articles_path, method: :get do |f| %>
+<p>
+   <%= f.label "Search for" %>
+    <%= text_field_tag :q, params[:q] %>
+     <%= submit_tag "Go", name: nil %>
+</p>
+<% end %>
+
+<ul>
+  <% unless @result.empty? %>
+    <% @result.records.each_with_hit do |item, hit| %>
+   <p>
+     <%= item.title %>
+   </p>
+    <% end %>
+    <%= will_paginate @result %>
+  <% end %>
+</ul>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+  </tr>
+
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+    </tr>
+  <% end %>
+</table>
